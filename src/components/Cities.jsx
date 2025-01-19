@@ -7,7 +7,7 @@ export default function Cities({ images, state }) {
       <img
         src={images}
         alt=""
-        className="w-full object-cover h-full hover:scale-110 ease-out"
+        className="w-full object-cover  h-full hover:scale-1 ease-out"
       />
     </div>
   );

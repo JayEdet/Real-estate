@@ -1,15 +1,23 @@
+/* hooks */
+import React, { useState } from "react";
 /* components */
 import Card from "./Card";
 import Cities from "./Cities";
 import SelectProp from "./SelectProp";
 
+/* animation file */
+import {
+  containerVariants,
+  itemVariants,
+  textVariant,
+  scaleUp,
+} from "../animation";
+
 /* images */
-import heroImage from "/Hero image.jpg";
-import firstCarousel from "/new house.jpg";
-import secondCarousel from "/carousel apartment2.jpg";
+import heropicture from "/heropicture.jpg";
+import firstCarousel from "/Hero image.jpg";
 import firstImage from "/uncompleted1.jpg";
 import secondImage from "/comfy home.jpg";
-import thirdImage from "/carousel apartment2.jpg";
 import fourthImage from "/uncompleted2.jpg";
 import trustImage from "/Real estate home social media banner.jpeg";
 import zumaRock from "/Zuma rock.png";
@@ -17,13 +25,13 @@ import uyoStadium from "/Uyo stadium.png";
 import lagosState from "/Lagos state.png";
 import phCity from "/Rivers.jpg";
 import parlourImage from "/parlor.jpg";
+import advertImage from "/advert.jpg";
 
 /* icons */
 import { MdSecurity } from "react-icons/md";
 import { FaMoneyBillWave } from "react-icons/fa";
 import { FaPeopleGroup } from "react-icons/fa6";
 import { SiHomeadvisor } from "react-icons/si";
-import { useState } from "react";
 
 /* swiper */
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -33,9 +41,14 @@ import "swiper/css"; // Core Swiper styles
 import "swiper/css/autoplay"; // Autoplay module styles (optional)
 import "swiper/css/effect-fade"; // Effect styles (for fading transitions)
 
+/* Framer animations */
+import { motion } from "motion/react";
+
+const lazyCity = React.lazy(() => import("./Cities"));
 export default function Home() {
   /* array for swiper images */
-  const swiperImages = [heroImage, firstCarousel];
+  const swiperImages = [heropicture, firstCarousel];
+  const advertSwiper = [advertImage, firstImage];
   /* property category and location for <select> items in hero section */
   const propSearch = {
     location: ["Abuja", "Lagos", "Port harcourt", "Uyo"],
@@ -98,15 +111,16 @@ export default function Home() {
       p: "Our clients are our priority, we pride ourselves in delivering excellent services",
     },
   ];
+
   return (
     <div className="bg-cover bg-center">
       {/* Hero section */}
-      <section className="hero relative w-full h-96 z-30 lg:h-screen">
+      <section className="hero relative w-full h-screen z-30">
         {/* Swiper Carousel */}
         <Swiper
           modules={[Autoplay, EffectFade]} // Enable autoplay
           autoplay={{
-            delay: 3000, // Delay between slides (in ms)
+            delay: 5000, // Delay between slides (in ms)
             disableOnInteraction: false, // Continue autoplay after interaction
           }}
           loop={true} // Enable looping
@@ -116,8 +130,10 @@ export default function Home() {
           {swiperImages.map((image, index) => (
             <SwiperSlide key={index}>
               <div
-                className="w-full h-full bg-cover bg-center"
-                style={{ backgroundImage: `url(${image})` }}
+                className={"w-full h-full bg-cover bg-center"}
+                style={{
+                  backgroundImage: `url(${image})`,
+                }}
               ></div>
             </SwiperSlide>
           ))}
@@ -127,22 +143,32 @@ export default function Home() {
         <div className="inset-0 bg-black opacity-85 absolute z-20"></div>
 
         {/* Hero Content */}
-        <div className="relative flex flex-col items-center justify-center gap-4 z-20 h-full">
+        <motion.div className="relative flex flex-col items-center justify-center gap-4 z-20 h-full">
           <div className="text">
-            <h1 className="font-bold text-xl font-heroText text-offwhite md:text-3xl lg:text-5xl">
+            <motion.h1
+              variants={textVariant}
+              initial="hidden"
+              whileInView="show"
+              className="font-bold text-2xl font-heroText text-offwhite md:text-3xl lg:text-5xl"
+            >
               Discover properties easily
-            </h1>
+            </motion.h1>
           </div>
           {/* Select Property */}
           <SelectProp selectState={propSearch} onFilter={handleChange} />
-        </div>
+        </motion.div>
       </section>
 
       {/* properties section */}
       <section className="pt-8 flex flex-col justify-center gap-4 bg-slate-100">
-        <h3 className=" text-lg font-heroText font-bold bg-myGradient bg-clip-text text-transparent text-center md:text-2xl lg:text-3xl">
+        <motion.h3
+          variants={textVariant}
+          initial="hidden"
+          whileInView="show"
+          className=" text-lg font-heroText font-bold bg-myGradient bg-clip-text text-transparent text-center md:text-2xl lg:text-3xl"
+        >
           Featured properties
-        </h3>
+        </motion.h3>
         {/* cards div */}
         <div className="card relative flex flex-col justify-center items-center">
           <div className="cardItem flex flex-col justify-center gap-4 md:flex-row flex-wrap ">
@@ -156,22 +182,33 @@ export default function Home() {
               />
             ))}
           </div>
-          <button className="button relative mt-4 self-center py-2">
+          <motion.button
+            whileHover={{ scale: 1.1 }}
+            onHoverStart={(event) => {}}
+            onHoverEnd={(event) => {}}
+            className="button relative mt-4 self-center py-2"
+          >
             <span className="absolute inset-0 bg-black bg-opacity-50 hidden group-hover:flex"></span>
             <span className="relative z-10">See more properties</span>
-          </button>
+          </motion.button>
         </div>
         {/* this is about message in home page  */}
         <div className="about flex w-full flex-col mt-16 justify-center gap-4 md:flex-row lg:py-8">
-          <div className="image-div flex max-w-lg border-spacing-0 rounded-t-3xl rounded-b-lg overflow-hidden shadow-3xl lg:max-w-md">
+          <motion.div
+            variants={scaleUp}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.5 }}
+            className="image-div flex max-w-lg border-spacing-0 rounded-t-3xl rounded-b-lg overflow-hidden shadow-3xl lg:max-w-md"
+          >
             <img
               src={trustImage}
               alt="trust business"
               className="w-full h-full object-cover"
             />
-          </div>
-          <div className="about-message flex max-w-lg rounded-3xl h-auto bg-offBlue p-8 shadow-sm lg:rounded-3xl">
-            <p className="text-slate-800 font-bold md:text-lg lg:text-xl">
+          </motion.div>
+          <div className="about-message flex flex-col max-w-lg rounded-3xl h-auto bg-offBlue px-8 py-4 shadow-sm lg:rounded-3xl">
+            <p className="text-slate-800 font-bold leading-tight md:text-lg lg:text-xl">
               EliteDreams realty is a trusted real estate agency founded in the
               city of Abuja, Nigeria. Our mission is to provide exceptional
               service through integrity, professionalism and client focused
@@ -182,27 +219,73 @@ export default function Home() {
               </button>{" "}
               agent for free!
             </p>
+            {/* advertisement div */}
+            <div className="advertisement w-full h-36 bg-white/50 backdrop-blur-lg backdrop-brightness-90 mt-8 rounded-md lg:flex">
+              <motion.div
+                initial={{ x: -50, opacity: 0 }}
+                whileInView={{
+                  x: 0,
+                  opacity: 1,
+                  transition: { ease: "easeOut", duration: 0.3 },
+                }}
+                viewport={{ once: true, amount: 0.5 }}
+                className="imgDiv w-6/12 h-full overflow-hidden shadow-lg"
+              >
+                <Swiper
+                  modules={[Autoplay]} // Enable autoplay
+                  autoplay={{
+                    delay: 5000, // Delay between slides (in ms)
+                    disableOnInteraction: false, // Continue autoplay after interaction
+                  }}
+                  loop={true} // Enable looping
+                  className=" w-full h-full z-10"
+                >
+                  {advertSwiper.map((adImage, index) => (
+                    <SwiperSlide key={index}>
+                      <div
+                        className="bg-cover w-full h-full bg-center overflow-hidden rounded-md shadow-lg"
+                        style={{ backgroundImage: `url(${adImage})` }}
+                      ></div>
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
+              </motion.div>
+              {/* advertisement text */}
+              <div className="w-6/12 flex flex-col p-2 shadow-lg overflow-hidden">
+                <h1 className="font-heroText text-deepblue font-bold">
+                  Advertise your property
+                </h1>
+                <h3>
+                  for
+                  <span className="text-orange-700 text-transparent font-heroText text-lg font-bold mx-2">
+                    free!
+                  </span>
+                </h3>
+              </div>
+            </div>
           </div>
         </div>
       </section>
       {/* scenery */}
-      <div
-        className="scenery relative w-full h-96 bg-cover object-cover bg-fixed p-16"
-        style={{ backgroundImage: "url('/home topography.jpg')" }}
-      >
-        <div className="absolute inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-          <div className="inner-content flex flex-col justify-center items-center">
-            <h3 className="font-heroText text-center text-white text-lg md:text-2xl lg:text-3xl">
-              Browse premium and verified properties
-            </h3>
-            <p className="text-white text-sm lg:text-lg">
-              Buy a property in a serene environment
-            </p>
-            <button className="px-4 py-2 inset-0 bg-black bg-opacity-50 rounded-md text-white border border-offwhite mt-2">
-              Search property
-            </button>
+      <div className="w-full overflow-hidden">
+        <motion.div
+          className="scenery relative w-full h-96 bg-cover object-cover bg-fixed p-16"
+          style={{ backgroundImage: "url('/home topography.jpg')" }}
+        >
+          <div className="absolute inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+            <div className="inner-content flex flex-col justify-center items-center">
+              <h3 className="font-heroText text-center text-white text-lg md:text-2xl lg:text-3xl">
+                Browse premium and verified properties
+              </h3>
+              <p className="text-white text-sm lg:text-lg">
+                Buy a property in a serene environment
+              </p>
+              <button className="px-4 py-2 inset-0 bg-black bg-opacity-50 rounded-md text-white border border-offwhite mt-2">
+                Search property
+              </button>
+            </div>
           </div>
-        </div>
+        </motion.div>
       </div>
       {/* Location/cities */}
       <div className="location text-center py-8 flex flex-col gap-1 bg-slate-100 lg:py-16">
@@ -226,10 +309,17 @@ export default function Home() {
         <h3 className="font-heroText font-bold bg-myGradient bg-clip-text text-transparent text-center text-xl md:text-2xl lg:text-3xl mb-4">
           Why choose us?
         </h3>
-        <div className="svgDiv gap-2 justify-center md:flex lg:gap-6 px-8">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.5 }}
+          className="svgDiv gap-2 justify-center md:flex lg:gap-6 px-8"
+        >
           {svgDiv.map((svg) => (
-            <div
+            <motion.div
               key={svg.h3}
+              variants={itemVariants}
               className="flex flex-col my-2 gap-2 max-w-full rounded-md items-center md:max-w-80 bg-offBlue max-h-60 p-8"
             >
               <div className="text-4xl text-slate-800 lg:text-5xl">
@@ -239,12 +329,12 @@ export default function Home() {
                 {svg.h3}
               </div>
               <div className="text-center">{svg.p}</div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
       {/* interior */}
-      <div className="interior md:flex justify-center gap-4 lg:py-8">
+      <div className="interior py-4 md:flex justify-center gap-4 ">
         <div className="parlour rounded-md overflow-hidden w-full md:max-w-md lg:max-w-lg">
           <img
             src={parlourImage}
@@ -269,14 +359,15 @@ export default function Home() {
         </div>
       </div>
       {/* Get in touch */}
-      <div className="bg-myGradient bg-fixed p-8 flex flex-col gap-4 justify-center  lg:p-16 items-center">
-        <h1 className="text-white font-heroText font-bold md:text-3xl">
+      <div className="relative bg-myGradient p-8 flex flex-col gap-4 justify-center  lg:p-16 items-center">
+        <div className="absolute inset-0 bg-black bg-opacity-20 z-10"></div>
+        <h1 className="text-white font-heroText font-bold md:text-3xl z-20">
           Ready to find your dream home?
         </h1>
-        <h3 className="text-offwhite text-sm text-center md:text-lg">
+        <h3 className="text-offwhite text-sm text-center md:text-lg z-20">
           Contact us today to start your journey to finding the perfect property
         </h3>
-        <button className="p-2 bg-white text-yellow-700 rounded-lg font-bold border-yellow-900">
+        <button className="p-2 bg-white text-yellow-700 rounded-lg font-bold border-yellow-900 z-20">
           Get in touch
         </button>
       </div>

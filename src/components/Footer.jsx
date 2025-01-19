@@ -21,15 +21,8 @@ export default function Footer() {
     { id: "facebook", icon: <FaFacebook /> },
   ];
   return (
-    <div className="flex flex-col gap-3 w-full bg-deepNavy justify-center items-center p-4 border-none">
-      <div className="logo hidden md:flex max-w-40">
-        <img
-          src={logo}
-          alt="EliteDreams Realty Logo"
-          className="W-full h-full"
-        />
-      </div>
-      <div className="bottom-links flex flex-col gap-3 p-4 w-11/12  md:flex-row justify-between">
+    <div className="flex flex-col gap-2 w-full bg-deepNavy justify-center items-center border-none">
+      <div className="bottom-links flex flex-col p-4 w-11/12  md:flex-row justify-between">
         {/* quick links */}
         <div className="">
           <h3 className="bg-offBlue bg-clip-text text-transparent text-center md:text-2xl">
@@ -60,7 +53,7 @@ export default function Footer() {
         </div>
       </div>
       <h3 className="text-center text-sm text-gray-500">
-        &copy; 2024,Elitedreams Realty. All rights reserved
+        &copy; 2025,Elitedreams Realty. All rights reserved
       </h3>
     </div>
   );

@@ -1,6 +1,15 @@
+/* ANIMATION */
+import { motion } from "motion/react";
+import {
+  containerVariants,
+  itemVariants,
+  textVariant,
+  scaleUp,
+} from "../animation";
 /* images */
 import newHome from "/new house.jpg";
 import businessImage from "/Click for $10 worth of Bitcoin.jpeg";
+import Lens from "/lens.jpg";
 import skyScrapper from "/skyscrapper.jpg";
 export default function About() {
   return (
@@ -9,13 +18,22 @@ export default function About() {
         className="relative hero w-full h-80 p-8 bg-cover object-contain bg-fixed bg-center"
         style={{ backgroundImage: "url('/new house.jpg')" }}
       >
-        <div className="absolute inset-0 bg-black bg-opacity-70 flex justify-center items-center">
-          <h3 className="text-white">About us</h3>
+        <div className="absolute inset-0 bg-black bg-opacity-80 flex justify-center items-center">
+          <h3 className="font-heroText text-offwhite text-2xl">About us</h3>
         </div>
       </div>
       {/* our clients */}
-      <div className="p-4 flex flex-col gap-4 md:flex-row justify-center py-16">
-        <div className="rounded-lg p-4 md:max-w-lg bg-fadedBlue">
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, amount: 0.5 }}
+        className="p-4 flex flex-col gap-4 md:flex-row justify-center py-16"
+      >
+        <motion.div
+          variants={itemVariants}
+          className="rounded-lg p-4 md:max-w-lg bg-fadedBlue"
+        >
           <h3 className="text-center text-heroText font-bold text-xl bg-myGradient bg-clip-text text-transparent">
             Our clients
           </h3>
@@ -26,27 +44,19 @@ export default function About() {
             <br /> Elitedreams Realty connects buyers and sellers. We also
             advertise properties through a lens of authenticity.
           </p>
-          <h3 className="mt-4">
-            We connect{" "}
-            <span className="font-heroText font-bold text-lg italic bg-myGradient bg-clip-text text-transparent">
-              Buyers
-            </span>{" "}
-            and
-            <span className="font-heroText font-bold text-lg italic bg-myGradient bg-clip-text text-transparent">
-              {" "}
-              Sellers
-            </span>
-          </h3>
-        </div>
+        </motion.div>
         {/*Business div/coperation */}
-        <div className="rounded-md md:max-w-sm max-h-80 overflow-hidden">
+        <motion.div
+          variants={itemVariants}
+          className="rounded-md md:max-w-sm max-h-80 overflow-hidden"
+        >
           <img
-            src={businessImage}
+            src={Lens}
             alt="business image"
             className="w-full h-full object-cover"
           />
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
       {/* Mission */}
       <div className="p-4 flex flex-col gap-4 justify-center md:flex-row">
         <div className="rounded-md p-4 bg-fadedBlue md:max-w-lg">
@@ -64,14 +74,30 @@ export default function About() {
             integrity, professionalism, and customer satisfaction in all our
             endeavors.
           </p>
+          <h3 className="mt-4">
+            We connect{" "}
+            <span className="font-heroText font-bold text-lg italic bg-myGradient bg-clip-text text-transparent">
+              Buyers
+            </span>{" "}
+            and
+            <span className="font-heroText font-bold text-lg italic bg-myGradient bg-clip-text text-transparent">
+              {" "}
+              Sellers
+            </span>
+          </h3>
         </div>
-        <div className="overflow-hidden md:max-w-sm max-h-80 md:order-first md:">
+        <motion.div
+          variants={scaleUp}
+          initial="hidden"
+          whileInView="show"
+          className="overflow-hidden rounded-md over md:max-w-sm max-h-80 md:order-first"
+        >
           <img
-            src={skyScrapper}
+            src={businessImage}
             className="w-full h-full object-cover"
-            alt="skyscrapper"
+            alt="business, successful deals"
           />
-        </div>
+        </motion.div>
       </div>
     </div>
   );
